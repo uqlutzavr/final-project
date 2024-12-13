@@ -20,7 +20,7 @@ variable "region" {
 ### Backend vars
 variable "iam_profile" {
   description = "Profile of aws creds"
-  default     = null
+  default     = "default"
 }
 
 variable "zone_name" {

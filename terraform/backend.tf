@@ -1,17 +1,11 @@
 terraform {
   backend "s3" {
-    bucket         = "danit-devops-tf-state"
-    # Example
-    #key            = "eks/terraform.tfstate"
-    key            = 
+    bucket         = "final-project-uqlut99-bucket"
+    key            = "user/uqlut99@gmail.com/terraform.tfstate"
     encrypt        = true
-    # Example
-    #dynamodb_table = "lock-tf-eks"
-    dynamodb_table = 
-    # dynamo key LockID
-    # Params tekan from -backend-config when terraform init
-    #region = 
-    #profile = 
+    dynamodb_table = "lock-tf-eks-uqlut99"
+    region = "eu-central-1"
+    profile = "default"
   }
 }
 
