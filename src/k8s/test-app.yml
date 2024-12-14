@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: webapp
-  name: webapp
+  name: test
 spec:
   selector:
     matchLabels:
-      app: webapp
+      app: test
   template:
     metadata:
       labels:
-        app: webapp
+        app: test
     spec:
       containers:
-      - name: webapp
+      - name: test
         image: nginx
         resources:
         ports:
