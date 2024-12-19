@@ -49,7 +49,8 @@ jobs:
               run: |
                 git add src/k8s/deployment-app.yml
                 git commit -m "Update deployment tag to ${{ env.TAG }}"
-                git remote set-url origin https://x-access-token:${{ secrets.REPO_AUTH_TOKEN }}@github.com/uqlutzavr/final-project.git
+                git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/uqlutzavr/final-project.git
                 git push
+
                 
                 
