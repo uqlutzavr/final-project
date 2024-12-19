@@ -1,6 +1,7 @@
 name: Creating and pushing docker image
 env:
   TAG: v.0.1.${{ github.run_id }}
+  GITHUB_TOKEN: {{secrets }}
 on:
     push:
         branches: [ "main" ]
@@ -49,8 +50,7 @@ jobs:
               run: |
                 git add src/k8s/deployment-app.yml
                 git commit -m "Update deployment tag to ${{ env.TAG }}"
-                git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/uqlutzavr/final-project.git
-                git push
+                git push https://uqlutzavr:${{ secrets.REPO_AUTH_TOKEN }}@github.com/uqlutzavr/final-project.git
 
                 
                 
