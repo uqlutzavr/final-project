@@ -41,7 +41,7 @@ jobs:
                 cat src/k8s/deployment-app.yml
             - name: configure git
               run: |
-                git config --global user.email "uqlut@mail.mail"
+                git config --global user.email "uqlut@mail.mailcom"
                 git config --global user.name "Pavlo "
       
             - name: commit and push changes
