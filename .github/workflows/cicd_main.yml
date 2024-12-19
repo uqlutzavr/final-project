@@ -34,7 +34,7 @@ jobs:
                 
             - name: update deployment YAML file
               run: |
-                yq eval -i -y '.spec.template.spec.containers[] |= select(.name == "webapp").image = "uqlutzavr/final-webapp:v.0.1.12416150190"' src/k8s/deployment-app.yml
+                yq eval -i ".spec.template.spec.containers[] |= select(.name == \"webapp\").image = \"uqlutzavr/final-webapp:${{ env.TAG }}\"" src/k8s/deployment-app.yml
                 echo "Updated deployment YAML:"
                 cat src/k8s/deployment-app.yml
             - name: configure git
