@@ -1,20 +1,52 @@
 name: Creating and pushing docker image
+env:
+  TAG: v.0.1.${{ github.run_id }}
 on:
     push:
         branches: [ "main" ]
+        paths:
+          - src/**
+          - '!src/k8s/**' 
     pull_request:
         branches: [ "main" ]
+        paths:
+          - src/** 
+          - '!src/k8s/**' 
         
 jobs:
-    publish_images:
+    publish_image:
         runs-on: ubuntu-latest
         steps:
             - name: checkout
               uses: actions/checkout@v4
             - name: build image
               run: |
-                docker build ./src -t uqlutzavr/final-webapp:latest
+                docker build ./src -t uqlutzavr/final-webapp:${{ env.TAG }}
             - name: push image to docker hub
               run: |
                 docker login -u uqlutzavr -p ${{ secrets.DOCKER_HUB_TOKEN }}
-                docker push uqlutzavr/final-webapp:latest
+                docker push uqlutzavr/final-webapp:${{ env.TAG }}
+
+            - name: Install yq
+              run: |
+                sudo apt-get update
+                sudo apt-get install -y yq 
+                
+            - name: update deployment YAML file
+              run: |
+                yq eval ".spec.template.spec.containers[] |= select(.name == \"webapp\").image = \"uqlutzavr/final-webapp:${{ env.TAG }}\"" -i src/k8s/deployment.yml
+                echo "Updated deployment YAML:"
+                cat src/k8s/deployment.yml
+            - name: configure git
+              run: |
+                git config --global user.email "uqlut@mail.mail"
+                git config --global user.name "Pavlo "
+      
+            - name: commit and push changes
+                
+              run: |
+                git add src/k8s/deployment.yml
+                git commit -m "Update deployment tag to ${{ env.TAG }}"
+                git push https://uqlutzavr:${{ secrets.REPO_AUTH_TOKEN }}@github.com/uqlutzavr/final-project.git
+                
+                
