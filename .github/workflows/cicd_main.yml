@@ -34,9 +34,9 @@ jobs:
                 
             - name: update deployment YAML file
               run: |
-                yq eval ".spec.template.spec.containers[] |= select(.name == \"webapp\").image = \"uqlutzavr/final-webapp:${{ env.TAG }}\"" -i src/k8s/deployment.yml
+                yq eval ".spec.template.spec.containers[] |= select(.name == \"webapp\").image = \"uqlutzavr/final-webapp:${{ env.TAG }}\"" -i src/k8s/deployment-app.yml
                 echo "Updated deployment YAML:"
-                cat src/k8s/deployment.yml
+                cat src/k8s/deployment-app.yml
             - name: configure git
               run: |
                 git config --global user.email "uqlut@mail.mail"
