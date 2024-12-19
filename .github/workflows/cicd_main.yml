@@ -1,7 +1,6 @@
 name: Creating and pushing docker image
 env:
   TAG: v.0.1.${{ github.run_id }}
-  GITHUB_TOKEN: {{secrets }}
 on:
     push:
         branches: [ "main" ]
