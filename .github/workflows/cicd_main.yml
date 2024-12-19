@@ -36,7 +36,7 @@ jobs:
                 
             - name: update deployment YAML file
               run: |
-                yq e -i '(.env[] | select(.name == "TAG") | .value) = "${{ env.TAG }}"' src/k8s/deployment-app.yml
+                yq eval '.spec.template.spec.containers[0].image = "uqlutzavr/final-webapp:${{ env.TAG }}"' -i src/k8s/deployment-app.yml
                 echo "Updated deployment YAML:"
                 cat src/k8s/deployment-app.yml
             - name: configure git
@@ -47,7 +47,7 @@ jobs:
             - name: commit and push changes
                 
               run: |
-                git add src/k8s/deployment.yml
+                git add src/k8s/deployment-app.yml
                 git commit -m "Update deployment tag to ${{ env.TAG }}"
                 git push https://uqlutzavr:${{ secrets.REPO_AUTH_TOKEN }}@github.com/uqlutzavr/final-project.git
                 
